@@ -1,0 +1,4 @@
+seed: 42
+segmentation:
+  window_sec: 10
+  hop_sec: 5
