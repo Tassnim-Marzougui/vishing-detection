@@ -26,6 +26,8 @@ def metrics(y, score, thr=THRESHOLD):
     pred = (score >= thr).astype(int)
     fn = int(((pred == 0) & (y == 1)).sum())
     fp = int(((pred == 1) & (y == 0)).sum())
+    tp = int(((pred == 1) & (y == 1)).sum())
+    tn = int(((pred == 0) & (y == 0)).sum())
     return {
         "n": int(len(y)),
         "accuracy": float(accuracy_score(y, pred)),
@@ -33,6 +35,9 @@ def metrics(y, score, thr=THRESHOLD):
         "recall": float(recall_score(y, pred, zero_division=0)),
         "f1": float(f1_score(y, pred, zero_division=0)),
         "roc_auc": float(roc_auc_score(y, score)) if len(set(y.tolist())) > 1 else None,
+        "tp": tp,
+        "tn": tn,
+        "confusion_matrix": [[tn, fp], [fn, tp]],
         "fn": fn,
         "fp": fp,
         "fnr": float(fn / max(int((y == 1).sum()), 1)),
