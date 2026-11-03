@@ -1,0 +1,77 @@
+stages:
+  validate:
+    cmd: python -m vishing_detection.pipeline.run_stage validate
+    deps:
+      - data/metadata/audio_manifest.csv
+      - src/vishing_detection/pipeline/run_stage.py
+    outs:
+      - data/interim/quality.csv
+
+  prepare:
+    cmd: python -m vishing_detection.pipeline.run_stage prepare
+    deps:
+      - data/metadata/audio_manifest.csv
+      - data/interim/quality.csv
+      - src/vishing_detection/pipeline/run_stage.py
+    params:
+      - segmentation
+    outs:
+      - data/processed/manifest.csv
+      - data/processed/segments.csv
+
+  baselines:
+    cmd: python -m vishing_detection.pipeline.run_stage baselines
+    deps:
+      - data/processed/manifest.csv
+      - data/processed/segments.csv
+      - src/vishing_detection/pipeline/run_stage.py
+    metrics:
+      - reports/baselines.json:
+          cache: false
+
+  features_handcrafted:
+    cmd: python -m vishing_detection.pipeline.features
+    deps:
+      - data/raw/DS07_aslc448
+      - data/processed/segments.csv
+      - src/vishing_detection/pipeline/features.py
+    outs:
+      - data/features/handcrafted.csv
+
+  train:
+    cmd: python -m vishing_detection.pipeline.train
+    deps:
+      - data/features/handcrafted.csv
+      - data/processed/segments.csv
+      - src/vishing_detection/pipeline/train.py
+    params:
+      - seed
+    outs:
+      - models/latest
+
+  evaluate:
+    cmd: python -m vishing_detection.pipeline.evaluate
+    deps:
+      - models/latest
+      - data/features/handcrafted.csv
+      - data/processed/segments.csv
+      - reports/baselines.json
+      - src/vishing_detection/pipeline/evaluate.py
+      - src/vishing_detection/pipeline/train.py
+    metrics:
+      - reports/metrics.json:
+          cache: false
+
+  compare:
+    cmd: python -m vishing_detection.pipeline.compare
+    deps:
+      - data/raw/DS07_aslc448
+      - data/processed/manifest.csv
+      - data/processed/segments.csv
+      - data/features/handcrafted.csv
+      - src/vishing_detection/pipeline/compare.py
+      - src/vishing_detection/pipeline/train.py
+      - src/vishing_detection/pipeline/evaluate.py
+    metrics:
+      - reports/compare.json:
+          cache: false
