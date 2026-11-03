@@ -7,11 +7,9 @@ __pycache__/
 *.zip
 mlflow.db
 mlruns/
-models/latest/*.joblib
 data/interim/
 data/processed/
 data/features/
 data/metadata/audio_manifest.csv
 dashboard.html
 inspect_data.py
-models/

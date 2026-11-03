@@ -1,0 +1,6 @@
+outs:
+- md5: 8e9fd8757f615ef8213d3bdc0aad60ce.dir
+  size: 7294078
+  nfiles: 2
+  hash: md5
+  path: latest
