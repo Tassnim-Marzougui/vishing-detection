@@ -36,3 +36,10 @@
 - Pas de locuteur : split groupé par `conversation_id`.
 - Pas de `n_turns` d'audit (baseline n_turns indisponible).
 - Pas de corpus externe : test « cross-corpus » remplacé par leave-one-dialect-out.
+
+## Compléments (étape 1)
+- Format audio : WAV, 24 kHz (une seule fréquence d'échantillonnage dans le manifest).
+- Durée totale : environ 11 527 s (3 h 12 min), moyenne 27,3 s, min 12,6 s, max 55,9 s.
+- DOI / MD5 : à compléter (page Mendeley du dataset).
+- Licence : à vérifier sur Mendeley avant intégration (colonne license du manifest = "A verifier").
+- Contrôle de sécurité avant dvc push : aucun matériel sensible attendu (conversations synthétiques); à confirmer avec la licence.
