@@ -1,0 +1,25 @@
+{
+  "appels": {
+    "majority_class": 1,
+    "majority_acc_test": 0.5,
+    "n_test": 64,
+    "duration_sec": {
+      "threshold": 18.848,
+      "sign": 1,
+      "train_acc": 0.7288135593220338,
+      "test_acc": 0.625
+    }
+  },
+  "segments": {
+    "majority_class": 1,
+    "majority_acc_test": 0.6148148148148148,
+    "n_test": 270,
+    "seg_duration": {
+      "threshold": 10.0,
+      "sign": 1,
+      "train_acc": 0.32560137457044674,
+      "test_acc": 0.3851851851851852
+    }
+  },
+  "limite": "n_turns indisponible (audit DS04 seulement): majorite + duree uniquement"
+}
